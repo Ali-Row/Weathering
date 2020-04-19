@@ -1,0 +1,15 @@
+body {
+    background: rgb(178,217,249);
+    background: linear-gradient(90deg, rgb(129, 175, 213) 0%, rgba(18,84,149,1) 100%, rgba(0,212,255,1) 100%);
+    color: white;
+}
+
+button {
+    border: solid white 1px !important;
+    background: none !important;
+}
+
+.col-md-4, .col-md-8 {
+    border: solid white 1px;
+    border-radius: 10px;
+}
