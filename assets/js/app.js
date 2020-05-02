@@ -29,7 +29,6 @@ $(document).ready(function(){
         }).then(function(res){
 
             let currentCity = res.name;
-            let country = res.sys.country;
             let temp = convertKelvin(res.main.temp);
             let maxTemp = convertKelvin(res.main.temp_max);
             let minTemp = convertKelvin(res.main.temp_min);
@@ -38,15 +37,12 @@ $(document).ready(function(){
             let windSpeed = res.wind.speed;
             let sky = res.weather[0].main;
             let weather = $('#weather');
-
-       
-            
-            // console.log(res);
+     
             weather.append(`
-            <div class="d-flex justify-content-around">
-                <a href="index.html"><i class="fas fa-search"></i></a>
+            <div class="d-flex justify-content-around mt-5">
+                <a href="index.html" class="mt-2"><i class="fas fa-search"></i></a>
                 <h1 class="city text-center"> ${currentCity} </h1>
-                <a href="index.html"><i class="fas fa-plus"></i></a>
+                <a href="index.html" class="mt-2"><i class="fas fa-plus"></i></a>
             </div>
             `);
             weather.append(`<h6 class="text-center m-bot-60 time"> ${today}, ${time} </h6>`);
@@ -64,12 +60,12 @@ $(document).ready(function(){
             }            
             weather.append(`
                 <div class="d-flex justify-content-around">
-                    <div>
+                    <div class="text-center">
                         ${weatherLogo}
                         <h1 class="temp ml-5"> ${temp}° </h1>      
                     </div>
                             
-                    <div class="mt-4">
+                    <div class="mt-4 mr-5">
                         <h3 class="max-temp"> ${maxTemp}°F </h3>
                         <hr class="w-100">
                         <h3 class="min-temp"> ${minTemp}°F </h3>
@@ -77,18 +73,39 @@ $(document).ready(function(){
                 </div>
             `);
 
-            // weather.append(`<h4> Humidity: ${humidity}% </h4>`);
-            // weather.append(`<h4> Feels Like: ${feelsLike}°F </h4> <br>`);
-            // weather.append(`<h4> Wind Speed: ${windSpeed} mph </h4> <br>`);
-        //     weather.append(`
-        //     <iframe
-        //     width="500"
-        //     height="400"
-        //     frameborder="0" style="border:0; max-width: 400px;"
-        //     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyClFZgU_nLZ7QpoqQC_IvIizDwaNpYsYsU
-        //     &q=${city},${state}" allowfullscreen>
-        //   </iframe>
-        //   `)  
+            
+            weather.append(`
+           
+          `)  
+
+            weather.append(`
+                <div class="row mt-5 text-center">
+                    <div class="col-md-6">
+                        <iframe
+                            class="text-center"
+                            width="500"
+                            height="400"
+                            frameborder="0" style="border:0; max-width: 400px;"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyClFZgU_nLZ7QpoqQC_IvIizDwaNpYsYsU
+                            &q=${city},${state}" allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="col-4">
+                            <h4> Humidity: ${humidity}% </h4>
+                        </div>
+
+                        <div class="col-4">
+                            <h4> Feels Like: ${feelsLike}°F </h4> <br>
+                        </div>
+
+                        <div class="col-4">
+                            <h4> Wind Speed: ${windSpeed} mph </h4> <br>
+                        </div>
+                    </div>
+                </div>
+            `)
           
           $('#weather').show();
 

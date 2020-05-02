@@ -8,7 +8,7 @@ button {
     background: none !important;
 }
 i {
-    font-size: 30px;
+    font-size: 5vmin;
 }
 a {
     color: white !important;
@@ -28,7 +28,7 @@ hr {
     color: rgb(225, 225, 225);
 }
 .city {
-    font-size: 9vmin;
+    font-size: 8vmin;
 }
 .time {
     font-size: 4vmin;
