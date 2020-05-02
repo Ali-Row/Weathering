@@ -45,6 +45,9 @@ hr {
 .max-temp, .min-temp {
     font-size: 4vmin;
 }
+.extra-info {
+    background: rgba(49, 53, 57, 0.582);
+}
 /* .col-md-6 {
     border: solid white 1px;
     border-radius: 10px;

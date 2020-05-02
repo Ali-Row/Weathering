@@ -92,16 +92,19 @@ $(document).ready(function(){
                     </div>
 
                     <div class="col-md-6">
-                        <div class="col-4">
-                            <h4> Humidity: ${humidity}% </h4>
+                        <div class="col-md-4 m-auto extra-info">
+                            <i class="fas fa-tint"></i>
+                            <h4>${humidity}% </h4>
                         </div>
 
-                        <div class="col-4">
-                            <h4> Feels Like: ${feelsLike}°F </h4> <br>
+                        <div class="col-md-4 m-auto extra-info">
+                            <i class="fas fa-thermometer-quarter"></i>
+                            <h4>${feelsLike}°F </h4>
                         </div>
 
-                        <div class="col-4">
-                            <h4> Wind Speed: ${windSpeed} mph </h4> <br>
+                        <div class="col-md-4 m-auto extra-info">
+                            <i class="fas fa-wind"></i>
+                            <h4>${windSpeed} mph </h4>
                         </div>
                     </div>
                 </div>
