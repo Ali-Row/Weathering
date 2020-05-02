@@ -1,21 +1,51 @@
 body {
-    background: rgb(178,217,249);
-    background: linear-gradient(90deg, rgb(129, 175, 213) 0%, rgba(18,84,149,1) 100%, rgba(0,212,255,1) 100%);
+    background: rgb(49, 53, 57);
     color: white;
+    font-family: 'Roboto', sans-serif !important;
 }
 button {
     border: solid white 1px !important;
     background: none !important;
 }
-.forecast-bg {
-    background: rgb(49, 53, 57);
-    margin-top: 30px !important;
+i {
+    font-size: 30px;
 }
-#search:hover {
+a {
+    color: white !important;
+}
+hr {
+    border-color: rgba(255, 255, 255, 0.473);
+}
+.m-bot-60 {
+    margin-bottom: 60px !important;
+}
+#weather {
+    background: rgb(149,97,160);
+    background: linear-gradient(0deg, rgba(149,97,160,1) 0%, rgba(17,33,87,1) 100%);
+}
+#search:hover, a:hover {
     border-color: rgb(225, 225, 225) !important;
     color: rgb(225, 225, 225);
 }
-/* .col-md-4, .col-md-6 {
+.city {
+    font-size: 9vmin;
+}
+.time {
+    font-size: 4vmin;
+}
+.sky {
+    font-size: 6vmin !important;
+}
+.temp {
+    font-size: 16vmin !important;
+}
+.weather-logo {
+    font-size: 6vmin;
+}
+.max-temp, .min-temp {
+    font-size: 4vmin;
+}
+/* .col-md-6 {
     border: solid white 1px;
     border-radius: 10px;
 } */
