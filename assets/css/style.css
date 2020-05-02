@@ -16,6 +16,10 @@ a {
 hr {
     border-color: rgba(255, 255, 255, 0.473);
 }
+iframe {
+    width: 600px;
+    height: 439px;   
+}
 .m-bot-60 {
     margin-bottom: 60px !important;
 }
@@ -46,9 +50,16 @@ hr {
     font-size: 4vmin;
 }
 .extra-info {
-    background: rgba(49, 53, 57, 0.582);
+    background: rgba(49, 53, 57, 0.37);
+    max-width: 600px;
 }
 /* .col-md-6 {
     border: solid white 1px;
     border-radius: 10px;
 } */
+
+@media screen and (max-width: 980px) {
+    iframe, .extra-info {
+        max-width: 400px;
+    }
+  }
