@@ -3,14 +3,13 @@ $(document).ready(function(){
     // API call
     $('#search').one('click', function(e){
 
-        let now = moment();
-
-        let today = moment(now).format('dddd'); 
-        let time = moment(now).format('LT')
-
         // Hides the city and state search form
         let formWrapper = $('.form-wrapper')
         formWrapper.hide()
+
+        let now = moment();
+        let today = moment(now).format('dddd'); 
+        let time = moment(now).format('LT');
 
         let city = $('#city').val().trim();
         let state = $('#state').val().trim();
@@ -28,7 +27,7 @@ $(document).ready(function(){
             method: 'GET'
         }).then(function(res){
 
-            let currentCity = res.name;
+            currentCity = res.name;
             let temp = convertKelvin(res.main.temp);
             let maxTemp = convertKelvin(res.main.temp_max);
             let minTemp = convertKelvin(res.main.temp_min);
@@ -42,11 +41,12 @@ $(document).ready(function(){
             <div class="d-flex justify-content-around mt-5">
                 <a href="index.html" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-search"></i></a>
                 <h1 class="city text-center animated fadeInDown delay-1s"> ${currentCity} </h1>
-                <a href="index.html" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-plus"></i></a>
+                <a href="index.html" id="save-search" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-plus"></i></a>
             </div>
             `);
             weather.append(`<h6 class="text-center m-bot-60 time animated fadeInDown delay-1s"> ${today}, ${time} </h6>`);
 
+            // Switch statement to dynamically render a different weather condition logo based on the API response
             switch(sky) {
                 case 'Clouds':
                     weatherLogo = (`<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud"></i> Cloudy</h1>`); 
@@ -78,14 +78,14 @@ $(document).ready(function(){
                 <div class="row mt-5 text-center">
                     <div class="col-xl-6">
                         <iframe
-                            class="text-center animated fadeIn delay-1s"
+                            class="text-center animated fadeIn delay-2s"
                             frameborder="0" style="border:0;"
                             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyClFZgU_nLZ7QpoqQC_IvIizDwaNpYsYsU
                             &q=${city},${state}" allowfullscreen>
                         </iframe>
                     </div>
 
-                    <div class="col-xl-6 animated fadeIn delay-1s">
+                    <div class="col-xl-6 animated fadeIn delay-2s">
                         <div class="col-md-4 m-auto extra-info">
                             <i class="fas fa-tint m-3"></i>
                             <h4> Humidity </h4>
@@ -110,6 +110,18 @@ $(document).ready(function(){
           $('#weather').show();
 
         })
+    })
+
+    $(document).one('click', '#save-search', function(e) {
+
+        e.preventDefault()
+
+        let existingData = JSON.parse(localStorage.getItem('savedSearches'));
+
+        newData = existingData ? `${existingData}, ${currentCity}` : currentCity;
+
+        localStorage.setItem('savedSearches', JSON.stringify([newData]));
+   
     })
 
     // Converts kelvin into fahrenheit and parses it into an integer
