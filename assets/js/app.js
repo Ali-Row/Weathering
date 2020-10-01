@@ -1,33 +1,33 @@
-$(document).ready(function(){
+$(document).ready(() => {
+
+    $('#weather').hide();
+
+    $('#search').one('click', (e) => {
+        e.preventDefault();
+        let cityName = $('#city').val().trim();
+        let stateName = $('#state').val().trim();
+        searchWeather(cityName, stateName);
+    })
 
     // API call
-    $('#search').one('click', function(e){
-
+    let searchWeather = (city, state) => {
         // Hides the city and state search form
-        let formWrapper = $('.form-wrapper')
-        formWrapper.hide()
+        let formWrapper = $('.form-wrapper');
+        formWrapper.hide();
 
         let now = moment();
         let today = moment(now).format('dddd'); 
         let time = moment(now).format('LT');
-
-        let city = $('#city').val().trim();
-        let state = $('#state').val().trim();
-
         let queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state}&appid=292e2030aa02770ca57caacfbf6ed982`
 
-        e.preventDefault();
-
-        if (!city || !state) {
-            alert('Please fill out all of the fields')
-        } 
+        // if (!city || !state) alert('Please fill out all of the fields')
 
         $.ajax({
             url: queryUrl,
             method: 'GET'
-        }).then(function(res){
-
+        }).then((res) => {
             currentCity = res.name;
+            currentState = state;
             let temp = convertKelvin(res.main.temp);
             let maxTemp = convertKelvin(res.main.temp_max);
             let minTemp = convertKelvin(res.main.temp_min);
@@ -58,7 +58,6 @@ $(document).ready(function(){
                     weatherLogo = (`<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-showers-heavy"></i> Rainy</h1>`); 
                 break;
             }      
-
             weather.append(`
                 <div class="d-flex justify-content-around animated fadeInDown">
                     <div class="text-center">
@@ -72,8 +71,7 @@ $(document).ready(function(){
                         <h3 class="min-temp"> ${minTemp}°F </h3>
                     </div>
                 </div>
-            `);
-
+            `)
             weather.append(`
                 <div class="row mt-5 text-center">
                     <div class="col-xl-6">
@@ -105,30 +103,25 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
-            `)
-          
+            `)   
           $('#weather').show();
-
         })
+    }
+
+    $(document).one('click', '#save-search', (e) => {
+        e.preventDefault();
+        let cityStateObject = {city: currentCity, state: currentState};
+        save(cityStateObject);
     })
 
-    $(document).one('click', '#save-search', function(e) {
-
-        e.preventDefault()
-
-        let existingData = JSON.parse(localStorage.getItem('savedSearches'));
-
-        newData = existingData ? `${existingData}, ${currentCity}` : currentCity;
-
-        localStorage.setItem('savedSearches', JSON.stringify([newData]));
-   
-    })
+    let save = (data) => {
+        let storageData = JSON.parse(localStorage.getItem('savedSearches')) || [];
+        storageData.push(data);
+        localStorage.setItem('savedSearches', JSON.stringify(storageData));
+    }
 
     // Converts kelvin into fahrenheit and parses it into an integer
     let convertKelvin = (kelvin) => {
     return parseInt(((((kelvin) - 273.15) * 1.8) + 32));
     }
-
-    $('#weather').hide();
-
 })
