@@ -28,7 +28,7 @@ $(document).ready(() => {
       url: queryUrl,
       method: "GET",
     }).then((res) => {
-      console.log(res)
+      // console.log(res)
 
       // Globally scoped vars
       currentCity = res.name;
@@ -146,16 +146,16 @@ $(document).ready(() => {
         method: "GET",
       }).then((response) => {
         let sky = response.weather[0].main;
-        let displaySavedSearches = $("#savedSearchButtons");
+        let displaySavedSearches = $("#savedSearchDiv");
         let h1 = $("<h1>");
         let h3 = $("<h3>");
         h3.text(data.city + ", " + data.state);
         h1.text(convertKelvin(response.main.temp) + "°");
-        h3.addClass("time animated fadeInUp delay-1s");
+        h3.addClass("time animated fadeInUp delay-1s city-state");
         h1.addClass("time animated fadeInUp delay-1s");
         let div = $("<div>");
         div.addClass(
-          "col-md-6 text-center mt-1 mx-auto shadow-lg p-3 time animated fadeIn"
+          "col-md-6 savedCityButton text-center mt-1 mx-auto shadow-lg p-3 time animated fadeIn"
         );
         // Switch statement to dynamically render a different weather condition logo based on the API response
         switch (sky) {
@@ -181,10 +181,22 @@ $(document).ready(() => {
       });
     });
   };
+  
   renderButtonsFromStorage();
+
+  // When you click on the saved city divs stored on the homepage it runs the API call again with that city/state.
+  $(document).on('click', '.savedCityButton',function() {
+    let cityStateArr = $(this).children('.city-state').text().split(', ');
+    let cityName = cityStateArr[0];
+    let stateName = cityStateArr[1];
+    searchWeather(cityName, stateName);
+  })
 
   // Converts kelvin into fahrenheit and parses it into an integer
   let convertKelvin = (kelvin) => {
     return parseInt((kelvin - 273.15) * 1.8 + 32);
-  };
-});
+  }
+})
+
+
+
