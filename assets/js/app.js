@@ -1,6 +1,6 @@
 $(document).ready(() => {
   $("#weather").hide();
-  $("#savedSearchButtons").show();
+  $("#savedSearchDiv").show();
 
   $("#search").one("click", (e) => {
     e.preventDefault();
@@ -13,9 +13,9 @@ $(document).ready(() => {
   let searchWeather = (city, state) => {
     // Hides the city and state search form
     let formWrapper = $(".form-wrapper");
-    let savedSearchButtons = $("#savedSearchButtons");
+    let savedSearchDiv = $("#savedSearchDiv");
     formWrapper.hide();
-    savedSearchButtons.hide();
+    savedSearchDiv.hide();
 
     let now = moment();
     let today = moment(now).format("dddd");
@@ -47,7 +47,7 @@ $(document).ready(() => {
             <div class="d-flex justify-content-around mt-5">
                 <a href="index.html" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-search"></i></a>
                 <h1 class="city text-center animated fadeInDown delay-1s"> ${currentCity} </h1>
-                <a href="index.html" id="save-search" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-plus"></i></a>
+                <a href="#" id="save-search" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-plus"></i></a>
             </div>
             `);
       weather.append(
@@ -58,15 +58,23 @@ $(document).ready(() => {
       switch (sky) {
         case "Clouds":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-sun"></i> Clouds</h1>`;
+          weather.removeClass("purple-gradient-bg-top");
+          weather.addClass("cloudy-gradient-bg-top");
           break;
         case "Clear":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-sun"></i> Clear</h1>`;
+          weather.removeClass("purple-gradient-bg-top");
+          weather.addClass("sunny-gradient-bg-top");
           break;
         case "Rain":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-showers-heavy"></i> Rain</h1>`;
+          weather.removeClass("purple-gradient-bg-top");
+          weather.addClass("rainy-gradient-bg-top");
           break;
         case "Smoke":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-smog"></i></i> Fog</h1>`;
+          weather.removeClass("purple-gradient-bg-top");
+          weather.addClass("cloudy-gradient-bg-top");
           break;
         default:
           weatherLogo = `<h1 class="sky ml-5"></h1>`;
@@ -124,6 +132,17 @@ $(document).ready(() => {
   // Invokes the save function
   $(document).one("click", "#save-search", (e) => {
     e.preventDefault();
+
+    let saveIcon = `<i class="save-icon fas fa-save time animated fadeIn"></i>`;
+    let plusIcon = `<i class="fas fa-plus time animated fadeIn"></i>`
+    let saveSearch = $('#save-search');
+    saveSearch.html(saveIcon);
+
+    timeout = setTimeout(function () {
+      $(".save-icon").hide();
+      saveSearch.html(plusIcon);
+    }, 3000);
+
     let cityStateObject = { city: currentCity, state: currentState };
     save(cityStateObject);
   });
@@ -164,10 +183,10 @@ $(document).ready(() => {
             break;
           case "Clear":
             div.addClass("sunny-gradient-bg");
-            break; 
-            // case 'Rain':
-            // div.addClass("rainy-gradient-bg");
-            // break;
+            break;
+          case "Rain":
+            div.addClass("rainy-gradient-bg");
+            break;
           case "Smoke":
             div.addClass("cloudy-gradient-bg");
             break;
@@ -181,22 +200,19 @@ $(document).ready(() => {
       });
     });
   };
-  
+
   renderButtonsFromStorage();
 
   // When you click on the saved city divs stored on the homepage it runs the API call again with that city/state.
-  $(document).on('click', '.savedCityButton',function() {
-    let cityStateArr = $(this).children('.city-state').text().split(', ');
+  $(document).on("click", ".savedCityButton", function () {
+    let cityStateArr = $(this).children(".city-state").text().split(", ");
     let cityName = cityStateArr[0];
     let stateName = cityStateArr[1];
     searchWeather(cityName, stateName);
-  })
+  });
 
   // Converts kelvin into fahrenheit and parses it into an integer
   let convertKelvin = (kelvin) => {
     return parseInt((kelvin - 273.15) * 1.8 + 32);
-  }
-})
-
-
-
+  };
+});

@@ -23,9 +23,25 @@ iframe {
 .m-bot-60 {
     margin-bottom: 60px !important;
 }
-#weather {
+.purple-gradient-bg-top {
     background: rgb(149,97,160);
     background: linear-gradient(0deg, rgba(149,97,160,1) 0%, rgba(17,33,87,1) 100%);
+}
+.sunny-gradient-bg-top {
+    background: rgb(149,97,160);
+    background: linear-gradient(0deg, rgb(71, 166, 218) 0%, rgb(16, 47, 150) 100%);
+}
+.cloudy-gradient-bg-top {
+    background: rgb(149,97,160);
+    background: linear-gradient(0deg, rgb(172, 172, 172) 0%, rgb(69, 69, 69) 100%);
+}
+.rainy-gradient-bg-top {
+    background: rgb(149,97,160);
+    background: linear-gradient(0deg, rgb(123, 123, 123) 0%, rgb(53, 53, 53) 100%);
+}
+.night-gradient-bg-top {
+    background: rgb(149,97,160);
+    background: linear-gradient(0deg, rgb(39, 45, 109) 0%, rgb(19, 9, 51) 100%);
 }
 .purple-gradient-bg {
     background: rgb(149,97,160);
@@ -38,6 +54,10 @@ iframe {
 .cloudy-gradient-bg {
     background: rgb(149,97,160);
     background: linear-gradient(109deg, rgb(172, 172, 172) 0%, rgb(69, 69, 69) 100%);
+}
+.rainy-gradient-bg {
+    background: rgb(149,97,160);
+    background: linear-gradient(109deg, rgb(123, 123, 123) 0%, rgb(53, 53, 53) 100%);
 }
 .night-gradient-bg {
     background: rgb(149,97,160);
