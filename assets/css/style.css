@@ -27,7 +27,23 @@ iframe {
     background: rgb(149,97,160);
     background: linear-gradient(0deg, rgba(149,97,160,1) 0%, rgba(17,33,87,1) 100%);
 }
-#search:hover, a:hover {
+.purple-gradient-bg {
+    background: rgb(149,97,160);
+    background: linear-gradient(109deg, rgba(149,97,160,1) 0%, rgba(17,33,87,1) 100%);
+}
+.sunny-gradient-bg {
+    background: rgb(149,97,160);
+    background: linear-gradient(109deg, rgb(71, 166, 218) 0%, rgb(16, 47, 150) 100%);
+}
+.cloudy-gradient-bg {
+    background: rgb(149,97,160);
+    background: linear-gradient(109deg, rgb(172, 172, 172) 0%, rgb(69, 69, 69) 100%);
+}
+.night-gradient-bg {
+    background: rgb(149,97,160);
+    background: linear-gradient(109deg, rgb(39, 45, 109) 0%, rgb(19, 9, 51) 100%);
+}
+.btn:hover, a:hover {
     border-color: rgb(225, 225, 225) !important;
     color: rgb(225, 225, 225);
 }
