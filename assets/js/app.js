@@ -28,6 +28,8 @@ $(document).ready(() => {
       url: queryUrl,
       method: "GET",
     }).then((res) => {
+      console.log(res)
+
       // Globally scoped vars
       currentCity = res.name;
       currentState = state;
@@ -55,14 +57,19 @@ $(document).ready(() => {
       // Switch statement to dynamically render a different weather condition logo based on the API response
       switch (sky) {
         case "Clouds":
-          weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud"></i> Cloudy</h1>`;
+          weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-sun"></i> Clouds</h1>`;
           break;
         case "Clear":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-sun"></i> Clear</h1>`;
           break;
         case "Rain":
-          weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-showers-heavy"></i> Rainy</h1>`;
+          weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-showers-heavy"></i> Rain</h1>`;
           break;
+        case "Smoke":
+          weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-smog"></i></i> Fog</h1>`;
+          break;
+        default:
+          weatherLogo = `<h1 class="sky ml-5"></h1>`;
       }
       weather.append(`
                 <div class="d-flex justify-content-around animated fadeInDown">
@@ -129,8 +136,10 @@ $(document).ready(() => {
   };
 
   let renderButtonsFromStorage = () => {
-    let storageData = JSON.parse(localStorage.getItem("savedSearches")) || [];
-    storageData.forEach((data, i) => {
+    let savedCitiesAndStates =
+      JSON.parse(localStorage.getItem("savedSearches")) || [];
+
+    savedCitiesAndStates.forEach((data, i) => {
       let buttonQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${data.city},${data.state}&appid=292e2030aa02770ca57caacfbf6ed982`;
       $.ajax({
         url: buttonQueryURL,
@@ -146,7 +155,7 @@ $(document).ready(() => {
         h1.addClass("time animated fadeInUp delay-1s");
         let div = $("<div>");
         div.addClass(
-          "col-md-4 text-center m-auto shadow p-3 time animated fadeIn"
+          "col-md-6 text-center mt-1 mx-auto shadow-lg p-3 time animated fadeIn"
         );
         // Switch statement to dynamically render a different weather condition logo based on the API response
         switch (sky) {
@@ -155,10 +164,13 @@ $(document).ready(() => {
             break;
           case "Clear":
             div.addClass("sunny-gradient-bg");
+            break; 
+            // case 'Rain':
+            // div.addClass("rainy-gradient-bg");
+            // break;
+          case "Smoke":
+            div.addClass("cloudy-gradient-bg");
             break;
-          // case 'Rain':
-          //     weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-showers-heavy"></i> Rainy</h1>`;
-          // break;
           default:
             div.addClass("purple-gradient-bg");
         }
