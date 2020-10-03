@@ -115,7 +115,7 @@ iframe {
 }
 
 @media screen and (max-width: 700px) {
-    .info-text, .max-temp, .min-temp {
+    .info-text, .max-temp, .min-temp, .tile-temp {
         font-size: 6vmin !important;
     }
     .sky, .weather-logo  {
@@ -166,9 +166,10 @@ iframe {
     .city-state {
         font-size: 8vmin !important;
     }
-    .info-text, i {
+    .info-text, i, .tile-temp {
         font-size: 8vmin !important;
     }
+    
 }
 
 @media screen and (max-width: 360px) {

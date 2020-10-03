@@ -181,7 +181,7 @@ $(document).ready(() => {
         cityAndState.text(data.city + ", " + data.state);
         tempInF.text(convertKelvin(response.main.temp) + "°");
         cityAndState.addClass("time animated fadeInUp delay-1s city-state");
-        tempInF.addClass("time animated fadeInUp delay-1s");
+        tempInF.addClass("time animated tile-temp fadeInUp delay-1s");
         let div = $("<div>");
         div.addClass(
           "col-md-6 savedCityButton text-center mt-1 mx-auto rounded-lg shadow-lg p-3 time animated fadeIn"
