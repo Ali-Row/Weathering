@@ -91,7 +91,7 @@ $(document).ready(() => {
                         <h1 class="temp ml-5"> ${temp}° </h1>      
                     </div>
                             
-                    <div class="mt-4 mr-5 animated fadeInDown">
+                    <div class="mt-4 mr-5 animated fadeInDown max-min-temp">
                         <h3 class="max-temp"> ${maxTemp}°F </h3>
                         <hr class="w-100">
                         <h3 class="min-temp"> ${minTemp}°F </h3>
@@ -113,46 +113,26 @@ $(document).ready(() => {
                        <div class="row mx-auto extra-info">
                           <div class="col-xl-4 info-box">
                               <i class="fas fa-tint m-3"></i>
-                              <h4> Humidity </h4>
+                              <h4 class="info-text"> Humidity </h4>
                               <h2>${humidity}%</h2>
                           </div>
 
                           <div class="col-xl-4 info-box">
                               <i class="fas fa-thermometer-quarter m-3"></i>
-                              <h4> Feels Like </h4>
+                              <h4 class="info-text"> Feels Like </h4>
                               <h2>${feelsLike}°F</h2>
                           </div>
 
                           <div class="col-xl-4 info-box">
                               <i class="fas fa-wind m-3"></i>
-                              <h4> Wind </h4>
-                              <h2>${windSpeed} mph </h2>
-                          </div>
-                       </div>
-
-                       <div class="row mx-auto extra-info mt-2">
-                          <div class="col-xl-4 info-box">
-                              <i class="fas fa-tint m-3"></i>
-                              <h4> Humidity </h4>
-                              <h2>${humidity}%</h2>
-                          </div>
-
-                          <div class="col-xl-4 info-box">
-                              <i class="fas fa-thermometer-quarter m-3"></i>
-                              <h4> Feels Like </h4>
-                              <h2>${feelsLike}°F</h2>
-                          </div>
-
-                          <div class="col-xl-4 info-box">
-                              <i class="fas fa-wind m-3"></i>
-                              <h4> Wind </h4>
+                              <h4 class="info-text"> Wind </h4>
                               <h2>${windSpeed} mph </h2>
                           </div>
                        </div>
 
                        <div class="row mx-auto extra-info mt-2">
                           <div class="col-xl-12 info-box p-5">
-                              <h4>Built by Alistair Rowden</h4>
+                              <h4 class="info-text">Built by Alistair Rowden</h4>
                           </div>
                        </div>
                     </div>
@@ -204,7 +184,7 @@ $(document).ready(() => {
         tempInF.addClass("time animated fadeInUp delay-1s");
         let div = $("<div>");
         div.addClass(
-          "col-md-6 savedCityButton text-center mt-1 mx-auto shadow-lg p-3 time animated fadeIn"
+          "col-md-6 savedCityButton text-center mt-1 mx-auto rounded-lg shadow-lg p-3 time animated fadeIn"
         );
         // Switch statement to dynamically render a different weather condition logo based on the API response
         switch (sky) {

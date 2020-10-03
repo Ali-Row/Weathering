@@ -72,20 +72,14 @@ iframe {
 .city {
     font-size: 8vmin;
 }
-.time {
+.time, .max-temp, .min-temp {
     font-size: 4vmin;
 }
-.sky {
+.sky, .weather-logo  {
     font-size: 6vmin !important;
 }
 .temp {
     font-size: 16vmin !important;
-}
-.weather-logo {
-    font-size: 6vmin;
-}
-.max-temp, .min-temp {
-    font-size: 4vmin;
 }
 .extra-info {
     background: rgba(49, 53, 57, 0.37);
@@ -109,11 +103,35 @@ iframe {
         border-bottom: solid rgba(255, 255, 255, 0.329) 1px;
         border-right: none;
     }
+    .info-text, .max-temp, .min-temp {
+        font-size: 5vmin !important;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .info-text, .city-state {
+        font-size: 5vmin !important;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .info-text, .max-temp, .min-temp {
+        font-size: 6vmin !important;
+    }
+    .sky, .weather-logo  {
+        font-size: 8vmin !important;
+    }
+    .max-min-temp {
+        margin-top: 4px !important;
+    }
 }
 
 @media screen and (max-width: 620px) {
     iframe, .extra-info {
         width: 520px !important;
+    }
+    .city-state {
+        font-size: 6vmin !important;
     }
 }
 
@@ -145,10 +163,22 @@ iframe {
     iframe, .extra-info {
         width: 300px !important;
     }
+    .city-state {
+        font-size: 8vmin !important;
+    }
+    .info-text, i {
+        font-size: 8vmin !important;
+    }
 }
 
 @media screen and (max-width: 360px) {
     iframe, .extra-info {
         width: 260px !important;
+    }
+    .sky, .weather-logo  {
+        font-size: 6vmin !important;
+    }
+    .max-min-temp {
+        margin-top: 3px !important;
     }
 }
