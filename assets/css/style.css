@@ -99,3 +99,15 @@ iframe {
         max-width: 400px;
     }
   }
+
+@media screen and (max-width: 428px) {
+    iframe, .extra-info {
+        width: 300px !important;
+    }
+}
+
+@media screen and (max-width: 328px) {
+    iframe, .extra-info {
+        width: 280px !important;
+    }
+}
