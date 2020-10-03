@@ -39,6 +39,14 @@ iframe {
     background: rgb(149,97,160);
     background: linear-gradient(0deg, rgb(123, 123, 123) 0%, rgb(53, 53, 53) 100%);
 }
+.haze-gradient-bg-top {
+    background: rgb(149,97,160);
+    background: linear-gradient(0deg, rgb(219, 191, 101) 0%, rgb(128, 113, 5) 100%);
+}
+.mist-gradient-bg-top {
+    background: rgb(149,97,160);
+    background: linear-gradient(0deg, rgb(101, 191, 219) 0%, rgb(5, 99, 128) 100%);
+}
 .night-gradient-bg-top {
     background: rgb(149,97,160);
     background: linear-gradient(0deg, rgb(39, 45, 109) 0%, rgb(19, 9, 51) 100%);
@@ -58,6 +66,14 @@ iframe {
 .rainy-gradient-bg {
     background: rgb(149,97,160);
     background: linear-gradient(109deg, rgb(123, 123, 123) 0%, rgb(53, 53, 53) 100%);
+}
+.haze-gradient-bg {
+    background: rgb(149,97,160);
+    background: linear-gradient(109deg, rgb(219, 191, 101) 0%, rgb(128, 113, 5) 100%);
+}
+.mist-gradient-bg {
+    background: rgb(149,97,160);
+    background: linear-gradient(109deg, rgb(101, 191, 219) 0%, rgb(5, 99, 128) 100%);
 }
 .night-gradient-bg {
     background: rgb(149,97,160);
@@ -89,16 +105,55 @@ iframe {
     background: rgba(49, 53, 57, 0.37);
     max-width: 600px;
 }
-/* .col-md-6 {
-    border: solid white 1px;
-    border-radius: 10px;
-} */
+.info-box {
+    border-right: solid rgba(255, 255, 255, 0.329) 1px;
+}
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 1260px) {
     iframe, .extra-info {
-        max-width: 400px;
+        max-width: 560px;
     }
-  }
+}
+
+@media screen and (max-width: 1198px) {
+    iframe, .extra-info {
+        width: 700px;
+    }
+    .info-box {
+        border-bottom: solid rgba(255, 255, 255, 0.329) 1px;
+        border-right: none;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    iframe, .extra-info {
+        width: 520px !important;
+    }
+}
+
+@media screen and (max-width: 585px) {
+    iframe, .extra-info {
+        width: 500px !important;
+    }
+}
+
+@media screen and (max-width: 565px) {
+    iframe, .extra-info {
+        width: 480px !important;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    iframe, .extra-info {
+        width: 440px !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    iframe, .extra-info {
+        width: 350px !important;
+    }
+}
 
 @media screen and (max-width: 428px) {
     iframe, .extra-info {
@@ -106,8 +161,8 @@ iframe {
     }
 }
 
-@media screen and (max-width: 328px) {
+@media screen and (max-width: 360px) {
     iframe, .extra-info {
-        width: 280px !important;
+        width: 260px !important;
     }
 }

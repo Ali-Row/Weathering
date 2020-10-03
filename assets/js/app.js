@@ -22,14 +22,13 @@ $(document).ready(() => {
     let time = moment(now).format("LT");
     queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state}&appid=292e2030aa02770ca57caacfbf6ed982`;
 
-    // if (!city || !state) alert('Please fill out all of the fields')
+    if (!city || !state) return alert("Please fill out all of the fields");
 
     $.ajax({
       url: queryUrl,
       method: "GET",
     }).then((res) => {
-      // console.log(res)
-
+      console.log(res);
       // Globally scoped vars
       currentCity = res.name;
       currentState = state;
@@ -44,7 +43,7 @@ $(document).ready(() => {
       let weather = $("#weather");
 
       weather.append(`
-            <div class="d-flex justify-content-around mt-5">
+            <div class="d-flex justify-content-around top-menu mt-5">
                 <a href="index.html" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-search"></i></a>
                 <h1 class="city text-center animated fadeInDown delay-1s"> ${currentCity} </h1>
                 <a href="#" id="save-search" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-plus"></i></a>
@@ -54,30 +53,36 @@ $(document).ready(() => {
         `<h6 class="text-center m-bot-60 time animated fadeInDown delay-1s"> ${today}, ${time} </h6>`
       );
 
-      // Switch statement to dynamically render a different weather condition logo based on the API response
+      let weatherRow = $(".weather-row");
+      // Switch statement to dynamically render a different weather condition logo/colour based on the API response
       switch (sky) {
         case "Clouds":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-sun"></i> Clouds</h1>`;
-          weather.removeClass("purple-gradient-bg-top");
-          weather.addClass("cloudy-gradient-bg-top");
+          weatherRow.addClass("cloudy-gradient-bg-top");
           break;
         case "Clear":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-sun"></i> Clear</h1>`;
-          weather.removeClass("purple-gradient-bg-top");
-          weather.addClass("sunny-gradient-bg-top");
+          weatherRow.addClass("sunny-gradient-bg-top");
           break;
         case "Rain":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-cloud-showers-heavy"></i> Rain</h1>`;
-          weather.removeClass("purple-gradient-bg-top");
-          weather.addClass("rainy-gradient-bg-top");
+          weatherRow.addClass("rainy-gradient-bg-top");
           break;
         case "Smoke":
           weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-smog"></i></i> Fog</h1>`;
-          weather.removeClass("purple-gradient-bg-top");
-          weather.addClass("cloudy-gradient-bg-top");
+          weatherRow.addClass("cloudy-gradient-bg-top");
+          break;
+        case "Haze":
+          weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-braille"></i></i> Haze</h1>`;
+          weatherRow.addClass("haze-gradient-bg-top");
+          break;
+        case "Mist":
+          weatherLogo = `<h1 class="sky ml-5"><i class="weather-logo fas fa-stream"></i></i> Mist</h1>`;
+          weatherRow.addClass("mist-gradient-bg-top");
           break;
         default:
           weatherLogo = `<h1 class="sky ml-5"></h1>`;
+          weatherRow.addClass("purple-gradient-bg-top");
       }
       weather.append(`
                 <div class="d-flex justify-content-around animated fadeInDown">
@@ -105,23 +110,45 @@ $(document).ready(() => {
                     </div>
 
                     <div class="col-xl-6 animated fadeIn delay-2s">
-                        <div class="col-md-4 m-auto extra-info">
-                            <i class="fas fa-tint m-3"></i>
-                            <h4> Humidity </h4>
-                            <h2>${humidity}%</h2>
-                        </div>
+                       <div class="row mx-auto extra-info">
+                          <div class="col-xl-4 info-box">
+                              <i class="fas fa-tint m-3"></i>
+                              <h4> Humidity </h4>
+                              <h2>${humidity}%</h2>
+                          </div>
 
-                        <div class="col-md-4 m-auto extra-info">
-                            <i class="fas fa-thermometer-quarter m-3"></i>
-                            <h4> Feels Like </h4>
-                            <h2>${feelsLike}°F</h2>
-                        </div>
+                          <div class="col-xl-4 info-box">
+                              <i class="fas fa-thermometer-quarter m-3"></i>
+                              <h4> Feels Like </h4>
+                              <h2>${feelsLike}°F</h2>
+                          </div>
 
-                        <div class="col-md-4 m-auto extra-info">
-                            <i class="fas fa-wind m-3"></i>
-                            <h4> Wind </h4>
-                            <h2>${windSpeed} mph </h2>
-                        </div>
+                          <div class="col-xl-4 info-box">
+                              <i class="fas fa-wind m-3"></i>
+                              <h4> Wind </h4>
+                              <h2>${windSpeed} mph </h2>
+                          </div>
+                       </div>
+
+                       <div class="row mx-auto extra-info mt-2">
+                          <div class="col-xl-4 info-box">
+                              <i class="fas fa-tint m-3"></i>
+                              <h4> Humidity </h4>
+                              <h2>${humidity}%</h2>
+                          </div>
+
+                          <div class="col-xl-4 info-box">
+                              <i class="fas fa-thermometer-quarter m-3"></i>
+                              <h4> Feels Like </h4>
+                              <h2>${feelsLike}°F</h2>
+                          </div>
+
+                          <div class="col-xl-4 info-box">
+                              <i class="fas fa-wind m-3"></i>
+                              <h4> Wind </h4>
+                              <h2>${windSpeed} mph </h2>
+                          </div>
+                       </div>
                     </div>
                 </div>
             `);
@@ -130,18 +157,20 @@ $(document).ready(() => {
   };
 
   // Invokes the save function
-  $(document).one("click", "#save-search", (e) => {
+  $(document).on("click", "#save-search", (e) => {
     e.preventDefault();
+    let topMenu = $(".top-menu");
+    let plusIcon = $("#save-search");
+    let saveIcon = `<a href="#" id="save-search save-icon" class="mt-2 animated fadeIn"><i class="fas fa-save"></i></a>`;
+    let newPlusIcon = `<a href="#" id="save-search" class="mt-2 animated fadeIn"><i class="fas fa-plus"></i></a>`;
 
-    let saveIcon = `<i class="save-icon fas fa-save time animated fadeIn"></i>`;
-    let plusIcon = `<i class="fas fa-plus time animated fadeIn"></i>`
-    let saveSearch = $('#save-search');
-    saveSearch.html(saveIcon);
+    plusIcon.hide();
+    topMenu.append(saveIcon);
 
-    timeout = setTimeout(function () {
-      $(".save-icon").hide();
-      saveSearch.html(plusIcon);
-    }, 3000);
+    // timeout = setTimeout(function () {
+    //   plusIcon.show();
+
+    // }, 3000);
 
     let cityStateObject = { city: currentCity, state: currentState };
     save(cityStateObject);
@@ -190,6 +219,12 @@ $(document).ready(() => {
           case "Smoke":
             div.addClass("cloudy-gradient-bg");
             break;
+          case "Haze":
+            div.addClass("haze-gradient-bg");
+            break;
+          case "Mist":
+            div.addClass("mist-gradient-bg");
+            break;  
           default:
             div.addClass("purple-gradient-bg");
         }
