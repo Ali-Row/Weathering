@@ -20,7 +20,7 @@ $(document).ready(() => {
     let now = moment();
     let today = moment(now).format("dddd");
     let time = moment(now).format("LT");
-    queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state}&appid=292e2030aa02770ca57caacfbf6ed982`;
+    queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state}&appid=713c348493c88760b9f54828487c650d`;
 
     if (!city || !state) return alert("Please fill out all of the fields");
 
@@ -28,7 +28,7 @@ $(document).ready(() => {
       url: queryUrl,
       method: "GET",
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
       // Globally scoped vars
       currentCity = res.name;
       currentState = state;
@@ -46,7 +46,7 @@ $(document).ready(() => {
             <div class="d-flex justify-content-around top-menu mt-5">
                 <a href="index.html" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-search"></i></a>
                 <h1 class="city text-center animated fadeInDown delay-1s"> ${currentCity} </h1>
-                <a href="#" id="save-search" class="mt-2 animated fadeIn delay-1s"><i class="fas fa-plus"></i></a>
+                <a href="#" id="save-search" class="mt-2 animated fadeIn delay-1s"><i class="plus-icon animated fas fa-plus"></i></a>
             </div>
             `);
       weather.append(
@@ -149,6 +149,12 @@ $(document).ready(() => {
                               <h2>${windSpeed} mph </h2>
                           </div>
                        </div>
+
+                       <div class="row mx-auto extra-info mt-2">
+                          <div class="col-xl-12 info-box p-5">
+                              <h4>Built by Alistair Rowden</h4>
+                          </div>
+                       </div>
                     </div>
                 </div>
             `);
@@ -157,20 +163,15 @@ $(document).ready(() => {
   };
 
   // Invokes the save function
-  $(document).on("click", "#save-search", (e) => {
+  $(document).one('click', '#save-search', (e) => {
     e.preventDefault();
-    let topMenu = $(".top-menu");
-    let plusIcon = $("#save-search");
-    let saveIcon = `<a href="#" id="save-search save-icon" class="mt-2 animated fadeIn"><i class="fas fa-save"></i></a>`;
-    let newPlusIcon = `<a href="#" id="save-search" class="mt-2 animated fadeIn"><i class="fas fa-plus"></i></a>`;
-
-    plusIcon.hide();
-    topMenu.append(saveIcon);
-
-    // timeout = setTimeout(function () {
-    //   plusIcon.show();
-
-    // }, 3000);
+    let plusIcon = $('.plus-icon');
+    plusIcon.toggleClass('fa-plus fa-save');
+    plusIcon.addClass('fadeIn');
+      timeout = setTimeout(function () {
+        plusIcon.toggleClass('fadeIn fadeInDown');
+        plusIcon.toggleClass('fa-plus fa-save');
+      }, 3000);
 
     let cityStateObject = { city: currentCity, state: currentState };
     save(cityStateObject);
@@ -188,19 +189,19 @@ $(document).ready(() => {
       JSON.parse(localStorage.getItem("savedSearches")) || [];
 
     savedCitiesAndStates.forEach((data, i) => {
-      let buttonQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${data.city},${data.state}&appid=292e2030aa02770ca57caacfbf6ed982`;
+      let buttonQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${data.city},${data.state}&appid=713c348493c88760b9f54828487c650d`;
       $.ajax({
         url: buttonQueryURL,
         method: "GET",
       }).then((response) => {
         let sky = response.weather[0].main;
         let displaySavedSearches = $("#savedSearchDiv");
-        let h1 = $("<h1>");
-        let h3 = $("<h3>");
-        h3.text(data.city + ", " + data.state);
-        h1.text(convertKelvin(response.main.temp) + "°");
-        h3.addClass("time animated fadeInUp delay-1s city-state");
-        h1.addClass("time animated fadeInUp delay-1s");
+        let tempInF = $("<h1>");
+        let cityAndState = $("<h3>");
+        cityAndState.text(data.city + ", " + data.state);
+        tempInF.text(convertKelvin(response.main.temp) + "°");
+        cityAndState.addClass("time animated fadeInUp delay-1s city-state");
+        tempInF.addClass("time animated fadeInUp delay-1s");
         let div = $("<div>");
         div.addClass(
           "col-md-6 savedCityButton text-center mt-1 mx-auto shadow-lg p-3 time animated fadeIn"
@@ -229,7 +230,7 @@ $(document).ready(() => {
             div.addClass("purple-gradient-bg");
         }
 
-        div.append(h3, h1);
+        div.append(cityAndState, tempInF);
 
         displaySavedSearches.append(div);
       });
