@@ -7,6 +7,10 @@ button {
     border: solid white 1px !important;
     background: none !important;
 }
+iframe {
+    width: 600px;
+    height: 466px;   
+}
 i {
     font-size: 5vmin;
 }
@@ -15,10 +19,6 @@ a {
 }
 hr {
     border-color: rgba(255, 255, 255, 0.473);
-}
-iframe {
-    width: 600px;
-    height: 466px;   
 }
 .m-bot-60 {
     margin-bottom: 60px !important;
@@ -41,9 +41,6 @@ iframe {
 .mist-gradient-bg-top {
     background: linear-gradient(0deg, rgb(101, 191, 219) 0%, rgb(5, 99, 128) 100%);
 }
-.night-gradient-bg-top {
-    background: linear-gradient(0deg, rgb(39, 45, 109) 0%, rgb(19, 9, 51) 100%);
-}
 .purple-gradient-bg {
     background: linear-gradient(109deg, rgba(149,97,160,1) 0%, rgba(17,33,87,1) 100%);
 }
@@ -61,9 +58,6 @@ iframe {
 }
 .mist-gradient-bg {
     background: linear-gradient(109deg, rgb(101, 191, 219) 0%, rgb(5, 99, 128) 100%);
-}
-.night-gradient-bg {
-    background: linear-gradient(109deg, rgb(39, 45, 109) 0%, rgb(19, 9, 51) 100%);
 }
 .btn:hover, a:hover {
     border-color: rgb(225, 225, 225) !important;
@@ -89,6 +83,7 @@ iframe {
     border-right: solid rgba(255, 255, 255, 0.329) 1px;
 }
 
+/* Media queries for different browser widths */
 @media screen and (max-width: 1260px) {
     iframe, .extra-info {
         max-width: 560px;
@@ -109,13 +104,13 @@ iframe {
 }
 
 @media screen and (max-width: 800px) {
-    .info-text, .city-state {
+    .info-text, .tile-temp, .city-state {
         font-size: 5vmin !important;
     }
 }
 
 @media screen and (max-width: 700px) {
-    .info-text, .max-temp, .min-temp, .tile-temp {
+    .info-text, .max-temp, .min-temp, .tile-temp, .city-state {
         font-size: 6vmin !important;
     }
     .sky, .weather-logo  {
@@ -129,8 +124,6 @@ iframe {
 @media screen and (max-width: 620px) {
     iframe, .extra-info {
         width: 520px !important;
-    }
-    .city-state {
         font-size: 6vmin !important;
     }
 }

@@ -2,6 +2,7 @@ $(document).ready(() => {
   $("#weather").hide();
   $("#savedSearchDiv").show();
 
+  // Calls the searchWeather function when the search button is clicked
   $("#search").one("click", (e) => {
     e.preventDefault();
     let cityName = $("#city").val().trim();
@@ -11,24 +12,21 @@ $(document).ready(() => {
 
   // API call
   let searchWeather = (city, state) => {
-    // Hides the city and state search form
+    if (!city || !state) return alert("Please fill out all of the fields");
     let formWrapper = $(".form-wrapper");
     let savedSearchDiv = $("#savedSearchDiv");
-    formWrapper.hide();
-    savedSearchDiv.hide();
-
     let now = moment();
     let today = moment(now).format("dddd");
     let time = moment(now).format("LT");
     queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${state}&appid=713c348493c88760b9f54828487c650d`;
-
-    if (!city || !state) return alert("Please fill out all of the fields");
-
+    // Hiding homepage elements
+    formWrapper.hide();
+    savedSearchDiv.hide();
+    // API call
     $.ajax({
       url: queryUrl,
       method: "GET",
     }).then((res) => {
-      // console.log(res);
       // Globally scoped vars
       currentCity = res.name;
       currentState = state;
@@ -101,9 +99,7 @@ $(document).ready(() => {
       weather.append(`
                 <div class="row mt-5 text-center">
                     <div class="col-xl-6">
-                        <iframe
-                            class="text-center animated fadeIn delay-2s"
-                            frameborder="0" style="border:0;"
+                        <iframe class="text-center animated fadeIn delay-2s" frameborder="0" style="border:0;"
                             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyClFZgU_nLZ7QpoqQC_IvIizDwaNpYsYsU
                             &q=${city},${state}" allowfullscreen>
                         </iframe>
@@ -111,19 +107,19 @@ $(document).ready(() => {
 
                     <div class="col-xl-6 animated fadeIn delay-2s">
                        <div class="row mx-auto extra-info">
-                          <div class="col-xl-4 info-box">
+                          <div class="col-xl-4 info-box p-3">
                               <i class="fas fa-tint m-3"></i>
                               <h4 class="info-text"> Humidity </h4>
                               <h2>${humidity}%</h2>
                           </div>
 
-                          <div class="col-xl-4 info-box">
+                          <div class="col-xl-4 info-box p-3">
                               <i class="fas fa-thermometer-quarter m-3"></i>
                               <h4 class="info-text"> Feels Like </h4>
                               <h2>${feelsLike}°F</h2>
                           </div>
 
-                          <div class="col-xl-4 info-box">
+                          <div class="col-xl-4 info-box p-3">
                               <i class="fas fa-wind m-3"></i>
                               <h4 class="info-text"> Wind </h4>
                               <h2>${windSpeed} mph </h2>
@@ -142,16 +138,16 @@ $(document).ready(() => {
     });
   };
 
-  // Invokes the save function
-  $(document).one('click', '#save-search', (e) => {
+  // Invokes the save function and does an animation of the plus icon
+  $(document).one("click", "#save-search", (e) => {
     e.preventDefault();
-    let plusIcon = $('.plus-icon');
-    plusIcon.toggleClass('fa-plus fa-save');
-    plusIcon.addClass('fadeIn');
-      timeout = setTimeout(function () {
-        plusIcon.toggleClass('fadeIn fadeInDown');
-        plusIcon.toggleClass('fa-plus fa-save');
-      }, 3000);
+    let plusIcon = $(".plus-icon");
+    plusIcon.toggleClass("fa-plus fa-save");
+    plusIcon.addClass("fadeIn");
+    timeout = setTimeout(() => {
+      plusIcon.toggleClass("fadeIn fadeInDown");
+      plusIcon.toggleClass("fa-plus fa-save");
+    }, 3000);
 
     let cityStateObject = { city: currentCity, state: currentState };
     save(cityStateObject);
@@ -165,9 +161,7 @@ $(document).ready(() => {
   };
 
   let renderButtonsFromStorage = () => {
-    let savedCitiesAndStates =
-      JSON.parse(localStorage.getItem("savedSearches")) || [];
-
+    let savedCitiesAndStates = JSON.parse(localStorage.getItem("savedSearches")) || [];
     savedCitiesAndStates.forEach((data, i) => {
       let buttonQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${data.city},${data.state}&appid=713c348493c88760b9f54828487c650d`;
       $.ajax({
@@ -183,9 +177,8 @@ $(document).ready(() => {
         cityAndState.addClass("time animated fadeInUp delay-1s city-state");
         tempInF.addClass("time animated tile-temp fadeInUp delay-1s");
         let div = $("<div>");
-        div.addClass(
-          "col-md-6 savedCityButton text-center mt-1 mx-auto rounded-lg shadow-lg p-3 time animated fadeIn"
-        );
+        div.addClass("col-md-6 savedCityButton text-center mt-1 mx-auto rounded-lg shadow-lg p-3 time animated fadeIn");
+
         // Switch statement to dynamically render a different weather condition logo based on the API response
         switch (sky) {
           case "Clouds":
@@ -205,19 +198,15 @@ $(document).ready(() => {
             break;
           case "Mist":
             div.addClass("mist-gradient-bg");
-            break;  
+            break;
           default:
             div.addClass("purple-gradient-bg");
         }
-
         div.append(cityAndState, tempInF);
-
         displaySavedSearches.append(div);
       });
     });
   };
-
-  renderButtonsFromStorage();
 
   // When you click on the saved city divs stored on the homepage it runs the API call again with that city/state.
   $(document).on("click", ".savedCityButton", function () {
@@ -231,4 +220,7 @@ $(document).ready(() => {
   let convertKelvin = (kelvin) => {
     return parseInt((kelvin - 273.15) * 1.8 + 32);
   };
+
+  // Shows the saved city divs on the homepage by default
+  renderButtonsFromStorage();
 });
