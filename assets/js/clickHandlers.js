@@ -11,7 +11,7 @@ $(document).one("click", "#save-search", (e) => {
       plusIcon.toggleClass("fa-plus fa-save");
     }, 3000);
 
-    let cityStateObject = { city: currentCity, state: currentState };
+    let cityStateObject = { city: currentCity, state: currentState, id: uuidv4() };
     save(cityStateObject);
 });
 
@@ -22,3 +22,10 @@ $(document).on("click", ".savedCityButton", function () {
     let stateName = cityStateArr[1];
     searchWeather(cityName, stateName);
 });
+
+$(document).on("click", ".delete-saved-weather", function (e) {
+    e.stopPropagation();
+    let cityId = $(this).attr("id");
+    deleteSavedCity(cityId);
+    renderButtonsFromStorage();
+})

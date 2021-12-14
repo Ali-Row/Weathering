@@ -1,5 +1,5 @@
 // API call
-let searchWeather = (city, state) => {
+const searchWeather = (city, state) => {
     if (!city || !state) return alert("Please fill out all of the fields");
     let formWrapper = $(".form-wrapper");
     let savedSearchDiv = $("#savedSearchDiv");

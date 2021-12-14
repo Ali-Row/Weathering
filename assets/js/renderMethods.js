@@ -109,49 +109,52 @@ const renderWeather = (res, city, state, today, time) => {
   }
 
 let renderButtonsFromStorage = () => {
-let savedCitiesAndStates = JSON.parse(localStorage.getItem("savedSearches")) || [];
-savedCitiesAndStates.forEach((data, i) => {
-    let buttonQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${data.city},${data.state}&units=imperial&appid=713c348493c88760b9f54828487c650d`;
-    $.ajax({
-    url: buttonQueryURL,
-    method: "GET",
-    }).then((response) => {
-    let sky = response.weather[0].main;
-    let displaySavedSearches = $("#savedSearchDiv");
-    let tempInF = $("<h1>");
-    let cityAndState = $("<h3>");
-    cityAndState.text(data.city + ", " + data.state);
-    tempInF.text(response.main.temp.toFixed(0) + "°");
-    cityAndState.addClass("time animated fadeInUp delay-1s city-state");
-    tempInF.addClass("time animated tile-temp fadeInUp delay-1s");
-    let div = $("<div>");
-    div.addClass("col-md-6 savedCityButton text-center mt-1 mx-auto rounded-lg shadow-lg p-3 time animated fadeIn");
-
-    // Switch statement to dynamically render a different weather condition logo based on the API response
-    switch (sky) {
-        case "Clouds":
-        div.addClass("cloudy-gradient-bg");
-        break;
-        case "Clear":
-        div.addClass("sunny-gradient-bg");
-        break;
-        case "Rain":
-        div.addClass("rainy-gradient-bg");
-        break;
-        case "Smoke":
-        div.addClass("cloudy-gradient-bg");
-        break;
-        case "Haze":
-        div.addClass("haze-gradient-bg");
-        break;
-        case "Mist":
-        div.addClass("mist-gradient-bg");
-        break;
-        default:
-        div.addClass("purple-gradient-bg");
-    }
-    div.append(cityAndState, tempInF);
-    displaySavedSearches.append(div);
+    let savedCitiesAndStates = JSON.parse(localStorage.getItem("savedSearches")) || [];
+    savedCitiesAndStates.forEach((data, i) => {
+        let buttonQueryURL = `https://api.openweathermap.org/data/2.5/weather?q=${data.city},${data.state}&units=imperial&appid=713c348493c88760b9f54828487c650d`;
+        $.ajax({
+        url: buttonQueryURL,
+        method: "GET",
+        }).then((response) => {
+        let sky = response.weather[0].main;
+        let displaySavedSearches = $("#savedSearchDiv");
+        let savedWeatherContainer = $("<div>");
+        let tempInF = $("<h1>");
+        let cityAndState = $("<h3>");
+        let deleteBtn = $("<button>");
+        deleteBtn.attr("id", data.id);
+        cityAndState.text(data.city + ", " + data.state);
+        tempInF.text(response.main.temp.toFixed(0) + "°");
+        deleteBtn.text("X")
+        cityAndState.addClass("time animated fadeInUp delay-1s city-state");
+        tempInF.addClass("time animated tile-temp fadeInUp delay-1s");
+        deleteBtn.addClass("delete-saved-weather btn btn-primary");
+        savedWeatherContainer.addClass("col-md-6 savedCityButton text-center mt-1 mx-auto rounded-lg shadow-lg p-3 time animated fadeIn");
+        // Switch statement to dynamically render a different weather condition logo based on the API response
+        switch (sky) {
+                case "Clouds":
+                savedWeatherContainer.addClass("cloudy-gradient-bg");
+            break;
+                case "Clear":
+                savedWeatherContainer.addClass("sunny-gradient-bg");
+            break;
+                case "Rain":
+                savedWeatherContainer.addClass("rainy-gradient-bg");
+            break;
+                case "Smoke":
+                savedWeatherContainer.addClass("cloudy-gradient-bg");
+            break;
+                case "Haze":
+                savedWeatherContainer.addClass("haze-gradient-bg");
+            break;
+                case "Mist":
+                savedWeatherContainer.addClass("mist-gradient-bg");
+            break;
+                default:
+                savedWeatherContainer.addClass("purple-gradient-bg");
+        }
+        savedWeatherContainer.append(cityAndState, tempInF, deleteBtn);
+        displaySavedSearches.append(savedWeatherContainer);
+        });
     });
-});
 };
